@@ -13,8 +13,6 @@ type propsTodolist = {
 }
 
 function Todolist(props: propsTodolist) {
-
-
     return (
         <div>
             <h3>{props.title}</h3>
@@ -39,9 +37,6 @@ function Todolist(props: propsTodolist) {
                     })
                 }
             </ul>
-
-
-
 
             <div>
                 <button>All</button>
