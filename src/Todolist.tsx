@@ -1,7 +1,8 @@
-import React from "react";
+import React, {ChangeEvent, useState} from "react";
+import { FileterValuesType } from "./App";
 
 type tasksType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -9,17 +10,37 @@ type tasksType = {
 type propsTodolist = {
     title: string
     tasks: Array<tasksType>
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
+    addTask:(title:string) => void
+    changeFilter:(filter:FileterValuesType) => void
 }
 
 function Todolist(props: propsTodolist) {
+
+    let [title, setTitle] = useState("")
+
+    let changeInputHandler = (e:ChangeEvent<HTMLInputElement>) => {
+       setTitle(e.target.value)
+    }
+    // @ts-ignore
+    let changeKeyHandler = (e:KeyboardEventHandler<HTMLInputElement>) => {
+        debugger
+        if (e.charCode === 13) {
+            addTaskHandler()
+        }
+    }
+    let addTaskHandler = () => {
+        props.addTask(title)
+        setTitle("")
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
 
             <div>
-                <input/>
-                <button>+</button>
+                <input value={title} onChange={changeInputHandler} onKeyPress={changeKeyHandler}/>
+                <button onClick={addTaskHandler}>+</button>
             </div>
 
             <ul>
@@ -39,9 +60,9 @@ function Todolist(props: propsTodolist) {
             </ul>
 
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={() => props.changeFilter("all")} >All</button>
+                <button onClick={() => props.changeFilter("active")}>Active</button>
+                <button onClick={() => props.changeFilter("completed")}>Completed</button>
             </div>
         </div>
     )
