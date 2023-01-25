@@ -77,6 +77,7 @@ function App() {
     }
 
     let changeTodolist = (newValue:string, todolistId:string) => {
+
         let newTodolist = todolists.find(t => t.id === todolistId)
         if (newTodolist) {
             newTodolist.title = newValue
